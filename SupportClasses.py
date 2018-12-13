@@ -7,7 +7,6 @@ import string
 class worker:
 	def __init__(self):
 		print('Initialize worker')
-
 	def addStudentsToGroups(groups,classes,groupIndex,level,n=-1):
 		ans=list()
 		# Select students from all classes
@@ -73,7 +72,6 @@ class sClass:
 			sName = ''.join(random.choices(string.ascii_uppercase, k=8))
 			sSelection = random.sample(range(0,nGroups),3)
 			self.students.append( student(self.index,self.name,sName,sSelection) )
-
 	def printPopulation(self):
 		for student in self.students:
 			print(' - %s %s'%(student.name,str(student.groups)))
@@ -95,8 +93,21 @@ class sClass:
 				tmp.append(hit.pop(i))
 			miss.extend(hit)
 			hit = tmp
-
+		# Return the unfortunate and update 
 		self.students = miss
 		self.n=len(self.students)
-
 		return hit
+
+# Misc printing support
+def printClasses(classes):
+	print('CLASSES')	
+	for currentClass in classes:
+		print('%s n=%d index=%d'%(currentClass.name,currentClass.n,currentClass.index))
+		currentClass.printPopulation()
+	print('')
+def printGroups(groups):
+	print('GROUPS:')
+	for group in groups:
+		group.printStatus()
+		group.printPopulation()
+	print('\n')
