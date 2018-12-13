@@ -4,9 +4,7 @@
 
 import sys
 import os
-from sClass import *
-from sGroup import sGroup
-from Worker import *
+from SupportClasses import *
 
 def printClasses(classes):
 	print('CLASSES')	

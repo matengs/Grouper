@@ -1,11 +1,55 @@
 #!/usr/local/opt/python/libexec/bin/python
-# Python location is local... 
-
 import sys
 import os
 import random
 import string
 
+class worker:
+	def __init__(self):
+		print('Initialize worker')
+
+	def addStudentsToGroups(groups,classes,groupIndex,level,n=-1):
+		ans=list()
+		# Select students from all classes
+		for sClass in classes:
+			ans.extend(sClass.getStudents(groupIndex,level,n))
+		if (len(ans)>groups[groupIndex].getOpenSlots()):
+			randSelection = random.sample(range(0,len(ans)),groups[groupIndex].getOpenSlots())
+			randSelection.sort(reverse=True)
+			for i in randSelection:
+				groups[groupIndex].addStudent(ans.pop(i))
+			for student in ans:
+				classes[student.sClassIndex].students.append(student)
+		else:
+			groups[groupIndex].addStudents(ans)
+
+# Group Class
+class sGroup:
+	def __init__(self,index,name,capacity):
+		self.index = index
+		self.name = name
+		self.capacity = capacity
+		self.n = 0
+		self.students = list()
+	def printStatus(self):
+		print('%s (index: %d capacity: %d n: %d open: %d)'%(self.name,self.index,self.capacity,self.n,self.getOpenSlots()))
+	def printPopulation(self):
+		for student in self.students:
+			student.print()
+	def getOpenSlots(self):
+		ans = self.capacity-self.n
+		if ans>0:
+			return ans
+		else:
+			return 0
+	def addStudents(self,students):
+		self.n+=len(students)
+		self.students.extend(students)
+	def addStudent(self,student):
+		self.n+=1
+		self.students.append(student)
+
+# Student Class
 class student:
 	def __init__(self,sClassIndex,sClassName,sName,sGroups):
 		self.sClassIndex = sClassIndex
@@ -17,7 +61,7 @@ class student:
 	def print(self):
 		print('%d %s %s %s'%(self.sClassIndex,self.sClassName,self.name,str(self.groups)))
 
-
+# School class Class
 class sClass:
 	def __init__(self,index,name,n):
 		self.index = index
@@ -56,4 +100,3 @@ class sClass:
 		self.n=len(self.students)
 
 		return hit
-
