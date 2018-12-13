@@ -44,9 +44,13 @@ class sGroup:
 	def addStudents(self,students):
 		self.n+=len(students)
 		self.students.extend(students)
+		self.sortStudents()
 	def addStudent(self,student):
 		self.n+=1
 		self.students.append(student)
+		self.sortStudents()
+	def sortStudents(self):
+		self.students.sort(key=lambda x: x.sClassIndex, reverse=False)
 
 # Student Class
 class student:

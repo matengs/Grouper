@@ -6,18 +6,7 @@ import sys
 import os
 from SupportClasses import *
 
-def printClasses(classes):
-	print('CLASSES')	
-	for currentClass in classes:
-		print('%s n=%d index=%d'%(currentClass.name,currentClass.n,currentClass.index))
-		currentClass.printPopulation()
-	print('')
-def printGroups(groups):
-	print('GROUPS:')
-	for group in groups:
-		group.printStatus()
-		group.printPopulation()
-	print('\n')
+
 
 ########## MAIN #############
 groups = list()
