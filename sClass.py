@@ -15,8 +15,6 @@ class student:
 	def getSelection(self):
 		return self.groups[0]
 
-
-
 class sClass:
 	def __init__(self,name,capacity):
 		self.name = name
@@ -29,6 +27,8 @@ class sClass:
 			self.students.append( student(self.name,sName,sSelection) )
 	def printPopulation(self):
 		for student in self.students:
-
 			print(' - %s %s top sel.: %d'%(student.name,str(student.groups),student.getSelection()))
+	def findStudent(self,groupSelection,level=0):
+		for student in self.students:
+			print(student)
 
