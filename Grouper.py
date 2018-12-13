@@ -1,34 +1,56 @@
-#!/usr/bin/python
-
 #!/usr/local/opt/python/libexec/bin/python
 # Python location is local... 
+#!/usr/bin/python
 
 import sys
 import os
 from sClass import *
 from sGroup import sGroup
+from Worker import *
 
+def printClasses(classes):
+	print('CLASSES')	
+	for currentClass in classes:
+		print('%s n=%d index=%d'%(currentClass.name,currentClass.n,currentClass.index))
+		currentClass.printPopulation()
+	print('')
+def printGroups(groups):
+	print('GROUPS:')
+	for group in groups:
+		group.printStatus()
+		group.printPopulation()
+	print('\n')
+
+########## MAIN #############
 groups = list()
 classes = list()
 
-# Setup groups
-for i in range(0,10):
-	groups.append(sGroup(i,'G_'+chr(97+i),10))
+nGroups = 10
+nGroupsCapacity = 20
+nClasses = 6
+nStudents = 30
+firstDraft = 3
 
-# Setup Classes
-for i in range(0,6):
-	classes.append(sClass('C_'+chr(97+i),8))
+# Setup groups/classes
+for i in range(0,nGroups):
+	groups.append(sGroup(i,'G_'+chr(97+i),nGroupsCapacity))
+for i in range(0,nClasses):
+	classes.append(sClass(i,'C_'+chr(97+i),nStudents))
 for currentClass in classes:
-	currentClass.simSetup()
+	currentClass.simSetup(nGroups)
 
-# Print 
-print('\nGROUPS:')
-for group in groups:
-	print(group.name+' capacity: '+str(group.capacity)+' index: '+str(group.index))
+printGroups(groups)
+printClasses(classes)
 
-print('\nCLASSES')
-for currentClass in classes:
-	print(currentClass.name+' (Capacity: '+str(currentClass.capacity)+')')
-	currentClass.printPopulation()
-####
+# Populate gro
+print('\nPopulate groups with %d students from each class with 1st choice'%(firstDraft))
+for groupIndex in range(0,nGroups):
+	worker.addStudentsToGroups(groups,classes,groupIndex,0,firstDraft)
 
+print('Populate remaining groups after priority')
+for priorityIndex in range(0,3):
+	for groupIndex in range(0,nGroups):
+		worker.addStudentsToGroups(groups,classes,groupIndex,priorityIndex,-1)
+
+printGroups(groups)
+printClasses(classes)
