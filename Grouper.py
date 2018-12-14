@@ -1,6 +1,10 @@
-#!/usr/local/opt/python/libexec/bin/python
-# Python location is local... 
-#!/usr/bin/python
+#!/usr/local/homebrew/bin/python3
+# 
+# - Python3 is needed
+#   Currently using homebrew install path
+# - xlrd/wt add-on packages are needed
+#
+# Mathias Engström 2018
 
 import sys
 import os

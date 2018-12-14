@@ -1,4 +1,3 @@
-#!/usr/local/opt/python/libexec/bin/python
 import sys
 import os
 import random
