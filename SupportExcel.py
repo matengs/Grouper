@@ -68,14 +68,39 @@ class excel:
 					for col in range(1,nCols):
 						groupSelect.append(int(sheet.cell(row,col).value))
 					currentClass.students.append(student(classIndex,className,str(sheet.cell(row,nameCol).value),groupSelect))
+			self.nGroupSelect = len(groupSelect)
 			classes.append(currentClass)
 			classIndex+=1
 		self.classes = classes
 	def	writeResult(self):
-		print('writeGroups')
 		wb = xlwt.Workbook()
 		fName = os.path.join(self.path,'Result.xls')
-
+		for group in self.groups:
+			sheet = wb.add_sheet(group.name)
+			sheet.write(0,0,group.name)
+			sheet.write(1,0,'Class')
+			sheet.write(1,1,'Name')
+			for i in range(2,self.nGroupSelect+2):
+				sheet.write(1,i,'Group')
+			rowOffset = 2
+			i=0
+			for student in group.students:
+				sheet.write(rowOffset+i,0,student.sClassName)
+				sheet.write(rowOffset+i,1,student.name)
+				offsetCol = 2
+				j=0
+				for groupSelection in student.groups:
+					sheet.write(rowOffset+i,offsetCol+j,groupSelection)
+					j+=1
+				i+=1
+		sheet = wb.add_sheet('No group')
+		sheet.write(0,0,'No group')
+		sheet.write(1,0,'Class')
+		sheet.write(1,1,'Name')
+		for i in range(2,self.nGroupSelect+2):
+			sheet.write(1,i,'Group')
+		rowOffset = 2
+		wb.save(fName)
 	def print(self):
 		print('Group file:\n - %s'%(self.groupFile))
 		print('Class files:')
