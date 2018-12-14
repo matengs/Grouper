@@ -100,6 +100,17 @@ class excel:
 		for i in range(2,self.nGroupSelect+2):
 			sheet.write(1,i,'Group')
 		rowOffset = 2
+		i = 0;
+		for currentClass in self.classes:
+			for student in currentClass.students:
+				sheet.write(rowOffset+i,0,student.sClassName)
+				sheet.write(rowOffset+i,1,student.name)
+				offsetCol = 2
+				j=0
+				for groupSelection in student.groups:
+					sheet.write(rowOffset+i,offsetCol+j,groupSelection)
+					j+=1
+				i=i+1
 		wb.save(fName)
 	def print(self):
 		print('Group file:\n - %s'%(self.groupFile))
@@ -108,5 +119,3 @@ class excel:
 			print(' - %s'%(fName))
 		printGroups(self.groups)
 		printClasses(self.classes)
-
-xls = excel()
