@@ -5,6 +5,7 @@ import os
 import glob
 from SupportClasses import *
 import xlrd
+import xlwt
 
 
 class excel:
@@ -70,8 +71,11 @@ class excel:
 			classes.append(currentClass)
 			classIndex+=1
 		self.classes = classes
-	def	writeGroups(self):
+	def	writeResult(self):
 		print('writeGroups')
+		wb = xlwt.Workbook()
+		fName = os.path.join(self.path,'Result.xls')
+
 	def print(self):
 		print('Group file:\n - %s'%(self.groupFile))
 		print('Class files:')

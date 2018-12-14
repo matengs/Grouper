@@ -48,3 +48,5 @@ for priorityIndex in range(0,3):
 
 printGroups(xls.groups)
 printClasses(xls.classes)
+
+xls.writeResult()
