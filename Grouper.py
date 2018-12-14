@@ -7,46 +7,22 @@ import os
 from SupportClasses import *
 from SupportExcel import *
 
-
-########## MAIN #############
 groups = list()
 classes = list()
 
-
-firstDraft = 3
-userFirstDraft = input('How many should get their first choice? ')
-if userFirstDraft:
-	firstDraft = int(userFirstDraft)
-
-# SIMULATION CODE
-# Setup groups/classes
-# nGroups = 10
-# nGroupsCapacity = 20
-# nClasses = 6
-# nStudents = 30
-# for i in range(0,nGroups):
-# 	groups.append(sGroup(i,'G_'+chr(97+i),nGroupsCapacity))
-# for i in range(0,nClasses):
-#	classes.append(sClass(i,'C_'+chr(97+i),nStudents))
-# for currentClass in classes:
-# 	currentClass.simSetup(nGroups)
-
 xls = excel()
 
-printGroups(xls.groups)
-printClasses(xls.classes)
-
 # Populate gro
-print('\nPopulate xls.groups with %d students from each class with 1st choice'%(firstDraft))
+print('\nWorking... Populate xls.groups with %d students from each class with 1st choice'%(xls.firstDraft))
 for groupIndex in range(0,len(xls.groups)):
-	worker.addStudentsToGroups(xls.groups,xls.classes,groupIndex,0,firstDraft)
+	worker.addStudentsToGroups(xls.groups,xls.classes,groupIndex,0,xls.firstDraft)
 
-print('Populate remaining xls.groups after priority')
+print('Working... Populate remaining xls.groups after priority\n')
 for priorityIndex in range(0,3):
 	for groupIndex in range(0,len(xls.groups)):
 		worker.addStudentsToGroups(xls.groups,xls.classes,groupIndex,priorityIndex,-1)
 
-printGroups(xls.groups)
-printClasses(xls.classes)
+xls.printGroups()
+xls.printClasses()
 
 xls.writeResult()

@@ -9,13 +9,17 @@ import xlwt
 
 
 class excel:
-	def __init__(self):
+	def __init__(self,firstDraft=3):
 		self.path = os.getcwd()
 		self.groupFile = self.getGroupFile()
 		self.classFiles = self.getClassFiles()
 		self.createGroups()
 		self.createClasses()
 		self.print()
+		self.firstDraft = firstDraft
+		userFirstDraft = input('How many should get their first choice? (default: 3) ')
+		if userFirstDraft:
+			self.firstDraft = int(userFirstDraft)
 	def getGroupFile(self):
 		fName = glob.glob('Gr*.xls*')
 		if not fName:
@@ -112,10 +116,27 @@ class excel:
 					j+=1
 				i=i+1
 		wb.save(fName)
+	# Printing instructions
 	def print(self):
 		print('Group file:\n - %s'%(self.groupFile))
 		print('Class files:')
 		for fName in self.classFiles:
 			print(' - %s'%(fName))
-		printGroups(self.groups)
-		printClasses(self.classes)
+		self.printGroups()
+		self.printClasses()
+	def printClasses(self):
+		print('Classes')	
+		for currentClass in self.classes:
+			print('%s n=%d index=%d'%(currentClass.name,currentClass.n,currentClass.index))
+			currentClass.printPopulation()
+		print('')
+	def printGroups(self):
+		print('Groups:')
+		for group in self.groups:
+			group.printStatus()
+			group.printPopulation()
+		print('')
+
+
+
+

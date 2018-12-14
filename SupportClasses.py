@@ -102,16 +102,3 @@ class sClass:
 		self.n=len(self.students)
 		return hit
 
-# Misc printing support
-def printClasses(classes):
-	print('CLASSES')	
-	for currentClass in classes:
-		print('%s n=%d index=%d'%(currentClass.name,currentClass.n,currentClass.index))
-		currentClass.printPopulation()
-	print('')
-def printGroups(groups):
-	print('GROUPS:')
-	for group in groups:
-		group.printStatus()
-		group.printPopulation()
-	print('\n')
